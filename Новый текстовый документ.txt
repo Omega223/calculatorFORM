@@ -1,0 +1,204 @@
+namespace calculatorFORM
+{
+    class MyForm : Form
+    {
+        TextBox tb;
+        //Label eq;
+        Double value = 0;
+
+        String operation = "";
+        Double CE = 0;
+        bool operration_prossed = false;
+
+        public MyForm()
+        {
+            int top;
+            int left;
+
+            tb = new TextBox();
+            tb.Font = new Font("Areal", 15);
+            tb.Text = "0";
+            tb.Multiline = true;
+            tb.Left = 10;
+            tb.Top = 10;
+            tb.Size = new Size(245, 45);
+            this.Controls.Add(tb);
+
+            //eq = new Label();
+            //eq.Font = new Font("Areal", 5);
+            //eq.Text = "";
+            //eq.Left = 10;
+            //eq.Top = 10;
+            //eq.Size = new Size(245, 45);
+            //this.Controls.Add(tb);
+
+            top = 60;
+            left = 10;
+            string[][] numbers = new string[5][];
+            numbers[0] = new string[] { "7", "4", "1", "0" };
+            numbers[1] = new string[] { "8", "5", "2" };
+            numbers[2] = new string[] { "9", "6", "3", "." };
+            numbers[3] = new string[] { "/", "*", "-", "+" };
+            numbers[4] = new string[] { "CE", "C", "=" };
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                for (int j = 0; j < numbers[i].Length; j++)
+                {
+                        switch (numbers[i][j])
+                        {
+                            case "0":
+                                Button zero = new Button();
+                                zero.Click += button_Click;
+                                zero.Text = numbers[i][j];
+                                zero.Left = 10;
+                                zero.Top = 200;
+                                zero.Size = new Size(95, 45);
+                                this.Controls.Add(zero);
+                                break;
+                            case "C":
+                                Button butC = new Button();
+                                butC.Click += buttonC_Click;
+                                butC.Text = numbers[i][j];
+                                butC.Left = left;
+                                butC.Top = top;
+                                butC.Size = new Size(45, 45);
+                                this.Controls.Add(butC);
+                                top += butC.Height + 2;
+                                break;
+                            case "CE":
+                                Button butCE = new Button();
+                                butCE.Click += buttonCE_Click;
+                                butCE.Text = numbers[i][j];
+                                butCE.Left = left;
+                                butCE.Top = top;
+                                butCE.Size = new Size(45, 45);
+                                this.Controls.Add(butCE);
+                                top += butCE.Height + 2;
+                                break;
+                            case "=":
+                                Button equally = new Button();
+                                equally.Click += buttonEq_Click;
+                                equally.Text = numbers[i][j];
+                                equally.Left = 210;
+                                equally.Top = 155;
+                                equally.Size = new Size(45, 90);
+                                this.Controls.Add(equally);
+                                break;
+                            case "+":
+                                Button operp = new Button();
+                                operp.Click += buttonOper_Click;
+                                operp.Text = numbers[i][j];
+                                operp.Left = left;
+                                operp.Top = top;
+                                operp.Size = new Size(45, 45);
+                                this.Controls.Add(operp);
+                                top += operp.Height + 2;
+                                break;
+                            case "-":
+                                Button oper_ = new Button();
+                                oper_.Click += buttonOper_Click;
+                                oper_.Text = numbers[i][j];
+                                oper_.Left = left;
+                                oper_.Top = top;
+                                oper_.Size = new Size(45, 45);
+                                this.Controls.Add(oper_);
+                                top += oper_.Height + 2;
+                                break;
+                            case "*":
+                                Button operm = new Button();
+                                operm.Click += buttonOper_Click;
+                                operm.Text = numbers[i][j];
+                                operm.Left = left;
+                                operm.Top = top;
+                                operm.Size = new Size(45, 45);
+                                this.Controls.Add(operm);
+                                top += operm.Height + 2;
+                                break;
+                            case "/":
+                                Button operd = new Button();
+                                operd.Click += buttonOper_Click;
+                                operd.Text = numbers[i][j];
+                                operd.Left = left;
+                                operd.Top = top;
+                                operd.Size = new Size(45, 45);
+                                this.Controls.Add(operd);
+                                top += operd.Height + 2;
+                                break;
+                            default:
+                                Button button = new Button();
+                                button.Click += button_Click;
+                                button.Text = numbers[i][j];
+                                button.Left = left;
+                                button.Top = top;
+                                button.Size = new Size(45, 45);
+                                this.Controls.Add(button);
+                                top += button.Height + 2;
+                                break;
+                        }
+
+                }
+                top = 60;
+                left += 50;
+            }
+        }
+
+        private void button_Click(object s, EventArgs e)
+        {
+            if ((tb.Text == "0")||(operration_prossed))
+                tb.Clear();
+            operration_prossed = false;
+            Button b = (Button)s;
+            if(b.Text==",")
+            {
+                if(!tb.Text.Contains(","))
+                    tb.Text += b.Text;
+            }
+            else
+                tb.Text += b.Text;
+        }
+
+        private void buttonC_Click(object s, EventArgs e)
+        {
+            tb.Text ="0";
+        }
+
+        private void buttonCE_Click(object s, EventArgs e)
+        {
+            CE += Double.Parse(tb.Text);
+            tb.Text = "0";
+        }
+
+        private void buttonOper_Click(object s, EventArgs e)
+        {
+            Button b = (Button)s;
+            operation = b.Text;
+            value = Double.Parse(tb.Text);
+            operration_prossed = true;
+            //eq
+        }
+
+        private void buttonEq_Click(object s, EventArgs e)
+        {
+            switch (operation)
+            {
+                case "+":
+                    tb.Text = (value+Double.Parse(tb.Text)).ToString();
+                    break;
+                case "-":
+                    tb.Text = (value - Double.Parse(tb.Text)).ToString();
+                    break;
+                case "*":
+                    tb.Text = (value * Double.Parse(tb.Text)).ToString();
+                    break;
+                case "/":
+                    tb.Text = (value / Double.Parse(tb.Text)).ToString();
+                    break;
+                default:
+                    break;
+            }
+            operration_prossed = false;
+
+        }
+    }
+}
