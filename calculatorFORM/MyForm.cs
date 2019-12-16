@@ -172,7 +172,6 @@ namespace calculatorFORM
             operation = b.Text;
             value = Double.Parse(tb.Text);
             operration_prossed = true;
-            //eq
         }
 
         private void buttonEq_Click(object s, EventArgs e)
